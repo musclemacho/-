@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FullCalendar CRUD Example</title>
+    <!-- FullCalendarのCSS -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="calendar"></div>
+
+    <!-- FullCalendarのJavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.5/index.global.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const calendarEl = document.getElementById('calendar');
+
+            // カレンダーの初期化
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,  // イベントのドラッグ＆ドロップを有効化
+                selectable: true, // 日付選択を有効化
+                events: [ // 初期イベント
+                    { id: '1', title: 'Sample Event 1', start: '2024-12-25' },
+                    { id: '2', title: 'Sample Event 2', start: '2024-12-26' }
+                ],
+                dateClick: function (info) {
+                    // 予定の追加
+                    const title = prompt('Enter Event Title:');
+                    if (title) {
+                        const newEvent = {
+                            id: Date.now().toString(), // ユニークなID
+                            title: title,
+                            start: info.dateStr
+                        };
+                        calendar.addEvent(newEvent);
+
+                        // サーバーに保存（オプション）
+                        fetch('/api/events', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(newEvent)
+                        }).then(response => {
+                            if (!response.ok) {
+                                alert('Failed to save event to server.');
+                            }
+                        });
+                    }
+                },
+                eventClick: function (info) {
+                    // 予定の編集・削除メニュー
+                    const action = prompt(`Edit or Delete the event "${info.event.title}"? (Type "edit" or "delete")`);
+                    if (action === 'edit') {
+                        // 予定の編集
+                        const newTitle = prompt('Edit Event Title:', info.event.title);
+                        if (newTitle) {
+                            info.event.setProp('title', newTitle);
+
+                            // サーバーを更新（オプション）
+                            fetch(`/api/events/${info.event.id}`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ title: newTitle })
+                            }).then(response => {
+                                if (!response.ok) {
+                                    alert('Failed to update event on server.');
+                                }
+                            });
+                        }
+                    } else if (action === 'delete') {
+                        // 予定の削除
+                        const confirmDelete = confirm(`Are you sure you want to delete the event "${info.event.title}"?`);
+                        if (confirmDelete) {
+                            info.event.remove();
+
+                            // サーバーに削除リクエスト（オプション）
+                            fetch(`/api/events/${info.event.id}`, {
+                                method: 'DELETE'
+                            }).then(response => {
+                                if (!response.ok) {
+                                    alert('Failed to delete event on server.');
+                                }
+                            });
+                        }
+                    }
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
+</body>
+</html>

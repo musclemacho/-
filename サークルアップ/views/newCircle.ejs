@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サークルを掲載する</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fef9f9;
+        }
+
+        header {
+            background-color: #ffcccc;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ff9999;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input[type="file"] {
+            border: none;
+        }
+
+        input[type="submit"] {
+            background-color: #ff9999;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ff6666;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .link-input {
+            font-size: 14px;
+            color: #555;
+        }
+
+        @media screen and (max-width: 600px) {
+            form {
+                width: 95%;
+                padding: 15px;
+            }
+
+            label {
+                font-size: 14px;
+            }
+
+            input, textarea, select {
+                font-size: 14px;
+            }
+
+            input[type="submit"] {
+                font-size: 14px;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>サークルを掲載する</h1>
+    </header>
+    <form id="circle-form" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="circleName">サークル名</label>
+            <input type="text" id="circleName" name="circleName" placeholder="例: テニスサークルGreen" required>
+        </div>
+
+        <div class="form-group">
+            <label for="memberCount">人数</label>
+            <input type="number" id="memberCount" name="memberCount" placeholder="例: 50" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">紹介文</label>
+            <textarea id="description" name="description" placeholder="サークルの特徴や活動内容を入力してください..." rows="5" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="feeAmount">会費金額</label>
+            <input type="number" id="feeAmount" name="feeAmount" placeholder="例: 5000">
+        </div>
+       
+
+        <div class="form-group">
+            <label for="photos">写真（最大5枚）</label>
+            <input type="file" id="photos" name="photos" accept="image/*" multiple>
+        </div>
+
+        <div class="form-group">
+            <label for="instagram">インスタグラムアカウント（リンク）</label>
+            <input type="url" id="instagram" name="instagram" placeholder="https://www.instagram.com/your_account" class="link-input">
+        </div>
+
+        <input type="submit" value="サークルを掲載する">
+    </form>
+
+    <script>
+     document.getElementById('circle-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const circleName = document.getElementById('circleName').value;
+            const memberCount = document.getElementById('memberCount').value;
+            const description = document.getElementById('description').value;
+            const feeAmount = document.getElementById('feeAmount').value;
+          
+            const instagram = document.getElementById('instagram').value;
+
+            fetch('/circles', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ circleName, memberCount, description, feeAmount, instagram })
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert('サークルが登録されました！');
+                window.location.href = '/';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('登録中にエラーが発生しました');
+            });
+        });
+
+    </script>
+</body>
+</html>

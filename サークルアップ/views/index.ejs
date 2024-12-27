@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サークルアップ</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fef9f9;
+        }
+
+        header {
+            background-color: #ffcccc;
+            padding: 15px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        header input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            border: 2px solid #ff9999;
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .button-container a {
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #ffffff;
+            background-color: #ff9999;
+            border: none; 
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .button-container button {
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #ffffff;
+            background-color: #ff9999;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button-container button:hover {
+            background-color: #ff6666;
+        }
+
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px;
+        }
+
+        .card {
+            background-color: #ffffff;
+            width: 90%;
+            max-width: 300px;
+            margin: 10px;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .menu {
+            display: none;
+        }
+
+        .menu.active {
+            display: block;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 30px;
+            height: 4px;
+            background-color: black;
+            margin: 5px 0;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg) translateY(10px);
+        }
+
+        .hamburger.open span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg) translateY(-10px);
+        }
+
+        
+    </style>
+</head>
+<body>
+    <header>
+        <input type="text" placeholder="検索キーワードを入力...">
+        
+
+        <div class="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+
+        <nav class="menu">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="/newCircle">サークルを掲載する</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="button-container">
+        <a href="/schedule">カレンダー</a>
+         <button data-genre="all">すべて</button>
+         <button data-genre="tennis">テニス</button>
+         <button data-genre="band">軽音</button>
+         <button data-genre="sports">スポーツ</button>
+         <button data-genre="himitu">ひみつ</button>
+     </div>
+    <main class="content">
+      
+
+        <a href="/circle1" class="card" data-genre="tennis" data-keywords="テニス,グリーン,ぐりーん,green">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>Green</h3>
+            <p>テニスラケットはいりません！</p>
+        </a>
+        <a href="/circle1" class="card" data-genre="tennis" data-keywords="テニス,ピーナッツ">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>peanute</h3>
+            <p>テニスラケットはいりません！</p>
+        </a>
+        <a href="/circle1" class="card" data-genre="tennis" data-keywords="テニス">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>Orange</h3>
+            <p>テニス</p>
+        </a>
+        <a href="/job2" class="card" data-genre="band" data-keywords="軽音">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>ひなたぼっこ</h3>
+            <p>かわいくてごめん延期した</p>
+        </a>
+        <a href="/job3" class="card" data-genre="band" data-keywords="軽音">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>とんがりぼうし</h3>
+            <p>結構渋いかも</p>
+        </a>
+        <a href="/circle1" class="card" data-genre="sports" data-keywords="スポーツ">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>knit!</h3>
+            <p>酒飲み</p>
+        </a>
+        <a href="/circle1" class="card" data-genre="band" data-keywords="軽音">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>ラジオノート</h3>
+            <p>仲良いよー</p>
+        </a>
+        <a href="/circle1" class="card" data-genre="band" data-keywords="軽音">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>penta</h3>
+            <p>音でかい</p>
+        </a>
+        <a href="/circle1" class="card" data-genre="sports" data-keywords="スポーツ">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>トトロ</h3>
+            <p>うるさいのがおる</p>
+        </a>
+        <a href="/circle1" class="card" data-genre="himitu" data-keywords="秘密">
+            <img src="https://via.placeholder.com/300x150" alt="Sample Image">
+            <h3>星を見る会</h3>
+            <p>パンツはいりません</p>
+        </a>
+    <% circles.forEach(circle => { %>
+        <a href="#" class="card">
+            <h3><%= circle.name %></h3>
+            <p>人数: <%= circle.members %></p>
+            <p>紹介文: <%= circle.description %></p>
+            <p>入会費・年会費: <%= circle.fees %> <%= circle.feeAmount ? circle.feeAmount + '円' : '' %></p>
+            <% if (circle.instagram) { %>
+                <a href="<%= circle.instagram %>" target="_blank">Instagram</a>
+        <% } %>
+        </a>
+    <% }) %>
+          
+
+
+    </main>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
